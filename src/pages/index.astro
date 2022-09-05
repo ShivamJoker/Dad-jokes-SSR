@@ -106,7 +106,8 @@ import Layout from "../layouts/Layout.astro";
   <ul role="list" class="text-lg divide-y divide-gray-200 max-w-lg">
     {
       jokes?.results.map(({ joke }) => {
-        let text = joke.replaceAll(query, `<em>${query}</em>`);
+        const regexHl = new RegExp(query, "gi");
+        let text = joke.replaceAll(regexHl, "<em>$&</em>");
         text = text.replaceAll(regex, "$&\n");
         return <li class="py-4 whitespace-pre-line" set:html={text} />;
       })
