@@ -1,0 +1,30 @@
+---
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta
+      name="keywords"
+      content="dad jokes, astro, SSR, cloudflare, jokes api"
+    />
+    <meta name="title" content={title} />
+    <meta
+      name="description"
+      content="Search for Dad jokes, Simple SSR website built with astro using Cloudflare workers"
+    />
+    <title>{title}</title>
+  </head>
+  <body class="flex items-center flex-col">
+    <slot />
+  </body>
+</html>

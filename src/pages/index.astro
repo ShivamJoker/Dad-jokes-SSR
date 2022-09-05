@@ -1,0 +1,123 @@
+---
+const reqUrl = Astro.request.url;
+const url = new URL(reqUrl);
+const query = url.searchParams.get("q");
+
+export interface JokeResult {
+  current_page: number;
+  limit: number;
+  next_page: number;
+  previous_page: number;
+  results: Joke[];
+  search_term: string;
+  status: number;
+  total_jokes: number;
+  total_pages: number;
+}
+
+export interface Joke {
+  id: string;
+  joke: string;
+}
+
+const API = "https://icanhazdadjoke.com";
+
+const jokes: JokeResult | undefined =
+  query &&
+  (await fetch(`${API}/search?term=${query}&limit=10`, {
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((res) => res.json()));
+
+const emojis = [
+  "😄",
+  "😃",
+  "😀",
+  "😊",
+  "😉",
+  "😍",
+  "😘",
+  "😚",
+  "😗",
+  "😙",
+  "😜",
+  "😝",
+  "😛",
+  "😳",
+  "😁",
+  "😌",
+  "😒",
+];
+
+const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+
+const regex = /("\ )|(\? )|(\. )+|(! )/gm;
+
+const suggestions = ["human", "girl", "dad", "ice", "cat", "old", "job", "son"];
+
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title={jokes
+    ? `Search result for ${query} on Dad jokes`
+    : "Search for Dad jokes and get server rendered result"}
+>
+  <form action="/" class="w-full max-w-lg my-4">
+    <label for="search" class="block text-center text-2xl font-medium my-4">
+      Search for <em>Dad jokes</em>
+      {randomEmoji}
+    </label>
+    <div class="mt-1">
+      <input
+        type="search"
+        name="q"
+        id="search"
+        value={query}
+        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500"
+        placeholder="people"
+      />
+    </div>
+  </form>
+
+  <div class="mb-4">
+    Try these {
+      suggestions.map((query) => (
+        <a class="text-indigo-600" href={`/?q=${query}`}>
+          {query},{" "}
+        </a>
+      ))
+    }
+  </div>
+  {
+    jokes?.results?.length == 0 && (
+      <div class="mt-4">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          No jokes found :(
+        </h1>
+        <p class="mt-2 text-base text-gray-500">
+          Please try again with something else!
+        </p>
+      </div>
+    )
+  }
+
+  <ul role="list" class="text-lg divide-y divide-gray-200 max-w-lg">
+    {
+      jokes?.results.map(({ joke }) => {
+        let text = joke.replaceAll(query, `<em>${query}</em>`);
+        text = text.replaceAll(regex, "$&\n");
+        return <li class="py-4 whitespace-pre-line" set:html={text} />;
+      })
+    }
+  </ul>
+</Layout>
+
+<style is:global>
+  li em {
+    color: black;
+    font-weight: bold;
+    font-style: normal;
+  }
+</style>
