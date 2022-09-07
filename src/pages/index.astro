@@ -111,7 +111,7 @@ import Layout from "../layouts/Layout.astro";
     )
   }
   <footer class="my-4 text-slate-600">
-    Took <time class="text-indigo-600">{jokes.elapsed / 1000n}ms</time>, found
+    Took <time class="text-indigo-600">{Number(jokes.elapsed)}ms</time>, found
     <code class="text-indigo-600">{jokes.count}</code> jokes
   </footer>
 </Layout>
