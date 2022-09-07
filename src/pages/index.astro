@@ -25,9 +25,8 @@ if (query) {
   jokes = search(jokesDb, {
     term: query,
     properties: ["joke"],
+    tolerance: 1,
   });
-
-  console.log(jokes.elapsed);
 }
 
 const emojis = [
@@ -83,9 +82,9 @@ import Layout from "../layouts/Layout.astro";
 
   <div class="mb-4">
     Try these {
-      suggestions.map((query) => (
+      suggestions.map((query, idx) => (
         <a class="text-indigo-600" href={`/?q=${query}`}>
-          {query},{" "}
+          {`${query}${idx !== suggestions.length - 1 ? "," : ""}`}
         </a>
       ))
     }
@@ -111,6 +110,10 @@ import Layout from "../layouts/Layout.astro";
       </ul>
     )
   }
+  <footer class="my-4 text-slate-600">
+    Took <time class="text-indigo-600">{jokes.elapsed / 1000n}ms</time>, found
+    <code class="text-indigo-600">{jokes.count}</code> jokes
+  </footer>
 </Layout>
 
 <style is:global>
