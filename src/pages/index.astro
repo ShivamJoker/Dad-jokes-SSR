@@ -11,12 +11,8 @@ import { create, insertBatch, search } from "@lyrasearch/lyra";
 import jokesJSON from "../../jokes.json";
 
 let jokes: SearchResult<{ _id: "string"; joke: "string" }>;
-let searchTime = 0;
-let startTime;
-let endTime;
 
 if (query) {
-  startTime = Date.now();
   const jokesDb = create({
     schema: {
       _id: "string",
@@ -33,9 +29,6 @@ if (query) {
     properties: ["joke"],
     tolerance: 1,
   });
-
-  endTime = Date.now();
-  searchTime = endTime - startTime;
 }
 
 const emojis = [
@@ -122,12 +115,7 @@ import Layout from "../layouts/Layout.astro";
   {
     query ? (
       <footer class="my-4 text-slate-600">
-        Took{" "}
-        <time class="text-indigo-600">
-          {searchTime}ms {startTime}
-          {endTime}
-        </time>
-        , Found
+        Found
         <code class="text-indigo-600">{jokes.count}</code> jokes
       </footer>
     ) : (
