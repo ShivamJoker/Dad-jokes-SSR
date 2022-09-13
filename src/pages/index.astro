@@ -126,13 +126,19 @@ import Layout from "../layouts/Layout.astro";
     ) : (
       <img
         src={guyStanding}
-        class="mt-8"
+        class="mt-8 mb-8"
         width="300"
         height="604"
         alt="A guy pretending to be dad with lots of humor"
       />
     )
   }
+  <p class="pt-2 mt-2 text-gray-600 border-t-gray-200 border-t-2">
+    Source code only available at <a
+      class="text-indigo-600"
+      href="https://github.com/ShivamJoker/Dad-jokes-SSR">GitHub</a
+    >
+  </p>
 </Layout>
 
 <style is:global>
