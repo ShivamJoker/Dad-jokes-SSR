@@ -3,14 +3,18 @@ const reqUrl = Astro.request.url;
 const url = new URL(reqUrl);
 const query = url.searchParams.get("q")?.trim();
 
+import guyStanding from "../images/guy-standing.svg";
+
 import { SearchResult } from "@lyrasearch/lyra";
 
 import { create, insertBatch, search } from "@lyrasearch/lyra";
 import jokesJSON from "../../jokes.json";
 
 let jokes: SearchResult<{ _id: "string"; joke: "string" }>;
+let searchTime = 0;
 
 if (query) {
+  const startTime = Date.now();
   const jokesDb = create({
     schema: {
       _id: "string",
@@ -27,6 +31,9 @@ if (query) {
     properties: ["joke"],
     tolerance: 1,
   });
+
+  const endTime = Date.now();
+  searchTime = endTime - startTime;
 }
 
 const emojis = [
@@ -111,12 +118,19 @@ import Layout from "../layouts/Layout.astro";
     )
   }
   {
-    query && (
+    query ? (
       <footer class="my-4 text-slate-600">
-        Took <time class="text-indigo-600">{Number(jokes.elapsed)}ms</time>,
-        Found
+        Took <time class="text-indigo-600">{searchTime}ms</time>, Found
         <code class="text-indigo-600">{jokes.count}</code> jokes
       </footer>
+    ) : (
+      <img
+        src={guyStanding}
+        class="mt-8"
+        width="300"
+        height="604"
+        alt="A guy pretending to be dad with lots of humor"
+      />
     )
   }
 </Layout>
