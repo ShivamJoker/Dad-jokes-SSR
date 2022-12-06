@@ -1,11 +1,6 @@
-# Welcome to [Astro](https://astro.build)
+# [Dad Jokes - Server Rendered within Milliseconds!](https://dad-jokes-ssr.pages.dev)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![basics](https://user-images.githubusercontent.com/4677417/186188965-73453154-fdec-4d6b-9c34-cb35c248ae5b.png)
-
+![image](https://user-images.githubusercontent.com/23727670/205901780-02cc1108-c2f7-4b4e-95e8-d8dde04b1966.png)
 
 ## 🚀 Project Structure
 
